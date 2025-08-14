@@ -1,0 +1,95 @@
+.bordered-container {
+    position: relative;
+    border: 2px solid #000; /* Border around the container */
+    padding: 20px;
+    margin-top: 30px;
+  }
+  
+  .title-on-border {
+    position: absolute;
+    top: -15px; /* Position the title above the border */
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #fff; /* Background color for the title */
+    padding: 0 10px;
+    font-weight: bold;
+  }
+  
+  /* ************************************ About me image***************************************************** */
+  .image-container {
+    text-align: center;
+    margin-top: 20px;
+  }
+  
+  .circle-image {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+  border: none !important;
+      object-fit: cover;
+      border: 2px solid #000;
+  }
+  
+  .image-title {
+      margin-top: 10px;
+      font-size: 1.25rem;
+      font-weight: bold;
+  }
+  .category-image {
+    width: 50px;
+    height: 50px;
+  }
+  /* ***************************************************************************************** */
+
+  /* direction */
+    /* direction */
+  
+    h1 {
+      color: #333;
+    }
+  
+    .step {
+      margin: 20px 0;
+    }
+  
+    .step-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+  
+    .step-number {
+      background-color: #88cc88;
+      color: white;
+      border-radius: 50%;
+      width: 30px;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      margin-right: 10px;
+    }
+  
+    .step-title {
+      font-weight: bold;
+      color: #333;
+    }
+  
+    .images {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 10px;
+    }
+  
+    .images img {
+      width: 48%;
+      border-radius: 4px;
+    }
+  
+    .mark-complete {
+      background-color: transparent;
+      outline: none;
+      border: none;
+    }
+  

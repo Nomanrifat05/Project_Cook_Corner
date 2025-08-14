@@ -1,0 +1,99 @@
+<?php
+
+$email = '';
+$password = '';
+$error = '';
+
+if (isset($_POST['login'])) {
+
+   //................ Retrieve data from input field ...............
+   $email = $_POST['email'] ?? '';
+   $password = $_POST['password'] ?? '';
+
+   if (empty($_POST['email']) || empty($_POST['password'])) {
+
+      $error = 'Please Enter email or password.';
+   } else {
+
+      //...................... Database Connection ..............................
+      include("../Includes/Database Connection/database_connection.php");
+
+      $stmt = $conn->prepare('SELECT id, password FROM user_info WHERE email = ? LIMIT 1');
+      $stmt->bind_param('s', $email);
+      $stmt->execute();
+      $stmt->bind_result($user_id, $stored_password);
+
+      if ($stmt->fetch()) {
+
+         if (password_verify($password, $stored_password)) {
+
+            session_start();
+            $_SESSION['user_id'] = $user_id;
+
+            $stmt->close();
+            mysqli_close($conn);
+
+            header('Location: ..\Home\Homepage.php');
+            exit();
+         } else {
+            $error = "Invalid email or password.";
+         }
+      } else {
+         $error = "Data Fetch Failed";
+      }
+   }
+}
+
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+   <meta charset="UTF-8" />
+   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+   <title>Login Page</title>
+   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+   <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+   <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet" />
+
+   <!-- favicon -->
+   <link rel="icon" href="../Images/logo/fav-icon.png" />
+
+   <link rel="stylesheet" href="login.css" />
+</head>
+
+<body>
+   <div class="wrapper">
+      <form action="Login.php" method="post">
+         <h1>Login</h1>
+         <div class="input-box">
+            <input type="text" name="email" id="" placeholder="Email" value="<?php echo htmlspecialchars($email) ?>" />
+            <i class="bx bxs-user"></i>
+         </div>
+         <div class="input-box">
+            <input type="password" name="password" id="" placeholder="Password" />
+            <i class="bx bxs-lock-alt"></i>
+         </div>
+         <div class="remember-forget">
+            <label for="int"><input type="checkbox" name="" id="int" />Remember me</label>
+            <a href="SendCode.php">Forgot Password?</a>
+         </div>
+
+         <div>
+            <button class="btn" type="submit" name="login">Login</button>
+         </div>
+         <?php if (!empty($error)) : ?>
+            <div class="error-message">
+               <p class="text-danger text-center"><?php echo htmlspecialchars($error); ?></p>
+            </div>
+         <?php endif; ?>
+         <div class="reg-link">
+            <p>Don't have an account?<a href="Signup.php">Register</a></p>
+         </div>
+      </form>
+   </div>
+</body>
+
+</html>
